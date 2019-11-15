@@ -43,12 +43,12 @@ class Bookmark
         return $this;
     }
 
-    public function getLastModified(): ?\DateTimeInterface
+    public function getLast_Modified(): ?\DateTimeInterface
     {
         return $this->last_modified;
     }
 
-    public function setLastModified(\DateTimeInterface $last_modified): self
+    public function setLast_Modified(\DateTimeInterface $last_modified): self
     {
         $this->last_modified = $last_modified;
 

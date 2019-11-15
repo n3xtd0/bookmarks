@@ -1,4 +1,48 @@
 {% extends "base.html.twig" %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<link href="{{ asset('assets/css/datatablles.css') }}" rel="stylesheet" /> 
+{% endblock %}
+
 {% block body %}
+
+{{ form(form) }}
+
+<table id="bookmarks-table">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Bookmark</th>
+            <th>Date Modified</th>
+            <th>Share</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for bookmark in bookmarkList %}
+
+        <tr>
+            <td><a href="#">Edit</a><a href="/bookmarks/delete/{{ bookmark.id }}">Delete</a></td>
+            <td>{{ bookmark.url }}</td>
+            <td>{{ bookmark.last_modified|date('Y-m-d H:i:s') }}</td>
+            <td><a href="#">Share</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+<script>
+$(document).ready( function () {
+    $('#bookmarks-table').DataTable();
+} );
+</script>
 
 {% endblock %}
