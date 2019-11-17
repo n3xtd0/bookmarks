@@ -1,9 +1,7 @@
 {% extends "base.html.twig" %}
 
-
 {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-<link href="{{ asset('css/form.css') }}" rel="stylesheet" /> 
+     {% include 'css.html.twig' %}
 {% endblock %}
 
 {% block body %}
@@ -15,6 +13,7 @@
         <tr>
             <th class="action">Action</th>
             <th class="url">Bookmark</th>
+            <th class="preview">Preview</th>
             <th class="modifed">Last Modified</th>
             <th class="share">Share</th>
         </tr>
@@ -31,6 +30,9 @@
                 <input type="url" value="{{ bookmark.url }}" disabled/>
                 <button class="save-btn" hidden>Save</button>
             </td>
+            <td class="preview">
+                
+            </td>
             <td class="modifed">{{ bookmark.last_modified|date('Y-m-d H:i:s') }}</td>
             <td class="share">
                 <button class="fb-btn" target="_blank" alt="Share on Facebook">Facebook</button>
@@ -45,15 +47,20 @@
 {% endblock %}
 
 {% block javascripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="{{ asset('js/edit.js') }}"></script>
-<script language="javascript" src="{{ asset('js/rss.js') }}"></script>
-
-<script>
-$(document).ready( function () {
-    $('#bookmarks-table').DataTable();
-} );
-</script>
-
+    {% include 'js.html.twig' %}
+    <script>
+        $(document).ready(function(){
+            {% for bookmark in bookmarkList %}
+                $.ajax({
+                    url: "https://api.linkpreview.net?key=123456&q={{ bookmark.url }}",
+                    async: true,
+                    success: function(result){
+                        $('tr[data-id="{{ bookmark.id }}"]').children(".preview").append('<h4>'+result.title+'</h4>');
+                        $('tr[data-id="{{ bookmark.id }}"]').children(".preview").append('<img src="'+result.image+'"');
+                    }
+                });
+            {% endfor %}
+        });
+       
+    </script>
 {% endblock %}
