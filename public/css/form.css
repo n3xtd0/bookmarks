@@ -1,0 +1,7 @@
+tr{
+    text-align: center;
+}
+.action {
+    display:flex;
+    justify-content: space-evenly;
+}

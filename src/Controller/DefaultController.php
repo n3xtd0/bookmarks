@@ -27,6 +27,7 @@ class DefaultController extends AbstractController{
             ->add('save', SubmitType::class)
             ->getForm();
         ;
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $bookmark = $form->getData();
@@ -55,5 +56,26 @@ class DefaultController extends AbstractController{
         return $this->redirectToRoute('bookmarks');
     }
 
+
+    /**
+     * @Route("/bookmarks/edit/{id}/{url}", requirements={"url"=".+"}))
+     */
+    public function update($id, $url)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $bookmark = $em->getRepository('App:Bookmark')->findOneById($id);
+
+        if (!$bookmark) {
+            throw $this->createNotFoundException(
+                'No bookmark found for id '.$id
+            );
+        }
+
+        $bookmark->setUrl($url);
+        $bookmark->setLast_Modified(date_create_from_format('Y-m-d H:i:s', date("Y-m-d H:i:s")));
+        $em->flush();
+
+        return $this->redirectToRoute('bookmarks');
+    }
 
 }
