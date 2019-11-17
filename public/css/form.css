@@ -1,7 +1,18 @@
-tr{
-    text-align: center;
+table.dataTable{
+    border: 1px solid #444;
 }
+
 .action {
     display:flex;
     justify-content: space-evenly;
+}
+
+tr{ text-align: center;}
+th{border-right: 1px solid #444;}
+td{border-right: 1px solid #999;}
+#bookmarks-table tr.odd{
+    background-color: #eee;
+}
+#bookmarks-table tbody tr:hover{
+    background-color:#ddd;
 }

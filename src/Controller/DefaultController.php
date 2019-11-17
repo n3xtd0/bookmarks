@@ -9,7 +9,7 @@ use Doctrine\ORM\emInterface;
 use App\Entity\Bookmark;
 use App\Repository\BookmarkRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends AbstractController{
@@ -23,7 +23,7 @@ class DefaultController extends AbstractController{
         
         $bookmark = new Bookmark();
         $form = $this->createFormBuilder($bookmark)
-            ->add('url',  TextType::class)
+            ->add('url',  UrlType::class)
             ->add('save', SubmitType::class)
             ->getForm();
         ;
